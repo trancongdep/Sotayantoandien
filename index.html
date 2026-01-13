@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Tay An Toàn Điện (ESA)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --evn-blue: #0054A6; /* Màu xanh thương hiệu EVN */
+            --evn-blue-dark: #003d7a;
+            --evn-yellow: #F39C12; /* Màu cam vàng an toàn/cảnh báo */
+            --evn-red: #D32F2F; /* Màu cảnh báo nguy hiểm */
+            --bg-light: #f4f6f9;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-light);
+            /* Chống copy cơ bản */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* --- Utility Classes --- */
+        .text-evn { color: var(--evn-blue); }
+        .bg-evn { background-color: var(--evn-blue) !important; color: white; }
+        .btn-evn { background-color: var(--evn-blue); color: white; border: none; }
+        .btn-evn:hover { background-color: var(--evn-blue-dark); color: white; }
+        .btn-warning { background-color: var(--evn-yellow); color: #fff; border: none; }
+        
+        /* --- Login & Profile Screen --- */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--evn-blue) 0%, #002d5a 100%);
+            padding: 20px;
+        }
+        .auth-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -70px auto 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 3px solid var(--evn-yellow);
+        }
+
+        /* --- Dashboard --- */
+        .app-header {
+            background-color: var(--evn-blue);
+            color: white;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 20px;
+        }
+        .menu-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border-bottom: 4px solid transparent;
+        }
+        .menu-item:active { transform: scale(0.98); }
+        .menu-item:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        
+        .menu-item i { font-size: 2rem; margin-bottom: 10px; display: block; }
+        .menu-item.news { color: var(--evn-blue); border-bottom-color: var(--evn-blue); }
+        .menu-item.law { color: #2ecc71; border-bottom-color: #2ecc71; } /* Xanh lá luật pháp */
+        .menu-item.case { color: var(--evn-red); border-bottom-color: var(--evn-red); } /* Đỏ cảnh báo */
+        .menu-item.science { color: #9b59b6; border-bottom-color: #9b59b6; }
+        .menu-item.qa { color: var(--evn-yellow); border-bottom-color: var(--evn-yellow); }
+        .menu-item.guide { color: #7f8c8d; border-bottom-color: #7f8c8d; }
+
+        .menu-title { font-weight: bold; font-size: 0.9rem; }
+
+        /* --- Secure Viewer Overlay --- */
+        .secure-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 9999;
+            background: transparent;
+            pointer-events: none; /* Cho phép click nhưng chặn bôi đen sâu */
+        }
+        
+        /* Hiệu ứng loading */
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--evn-yellow);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Màn hình ẩn/hiện */
+        .screen { display: none; }
+        .screen.active { display: block; }
+
+    </style>
+</head>
+<body oncontextmenu="return false"> <div id="screen-login" class="screen active">
+        <div class="auth-container">
+            <div class="auth-card text-center">
+                <div class="auth-logo">
+                    <i class="fas fa-bolt fa-2x text-warning"></i>
+                </div>
+                <h4 class="text-evn fw-bold mb-4">SỔ TAY AN TOÀN ĐIỆN</h4>
+                <p class="text-muted small mb-4">Đăng nhập để tra cứu tài liệu & quy chuẩn an toàn.</p>
+                
+                <form id="login-form">
+                    <div class="mb-3 text-start">
+                        <label class="form-label small fw-bold">Email</label>
+                        <input type="email" id="login-email" class="form-control" placeholder="example@evn.com.vn" required>
+                    </div>
+                    <div class="mb-3 text-start">
+                        <label class="form-label small fw-bold">Mật khẩu</label>
+                        <input type="password" id="login-password" class="form-control" placeholder="******" required>
+                    </div>
+                    <div id="login-error" class="text-danger small mb-3 d-none"></div>
+                    <button type="submit" class="btn btn-evn w-100 py-2 fw-bold shadow-sm">
+                        ĐĂNG NHẬP
+                    </button>
+                </form>
+                
+                <div class="mt-3">
+                    <small class="text-muted">Chưa có tài khoản? <a href="#" onclick="alert('Vui lòng liên hệ giảng viên để cấp tài khoản.')">Liên hệ Admin</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-profile" class="screen">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h5 class="text-evn fw-bold text-center mb-3">CẬP NHẬT THÔNG TIN</h5>
+                <p class="text-muted small text-center mb-4">Đây là lần đầu bạn đăng nhập. Vui lòng cung cấp thông tin để quản lý học viên.</p>
+                
+                <form id="profile-form">
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Họ và tên <span class="text-danger">*</span></label>
+                        <input type="text" id="pf-fullname" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Số điện thoại <span class="text-danger">*</span></label>
+                        <input type="tel" id="pf-phone" class="form-control" pattern="[0-9]{10,11}" title="Nhập số điện thoại hợp lệ" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Đơn vị công tác <span class="text-danger">*</span></label>
+                        <input type="text" id="pf-workplace" class="form-control" placeholder="VD: Điện lực Thủ Đức" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Chức vụ <span class="text-danger">*</span></label>
+                        <input type="text" id="pf-position" class="form-control" placeholder="VD: Công nhân vận hành" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold text-dark mt-2">
+                        LƯU & TRUY CẬP
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen-dashboard" class="screen">
+        <div class="app-header d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <i class="fas fa-shield-alt fa-lg me-2 text-warning"></i>
+                <div>
+                    <div class="fw-bold" style="font-size: 1rem;">AN TOÀN ĐIỆN</div>
+                    <div class="small opacity-75" style="font-size: 0.75rem;">Sổ tay điện tử</div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-sm btn-outline-light border-0" type="button" id="userMenu" data-bs-toggle="dropdown">
+                    <i class="fas fa-user-circle fa-2x"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow">
+                    <li class="px-3 py-1"><small class="text-muted fw-bold" id="user-display-name">Người dùng</small></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#" id="btn-logout"><i class="fas fa-sign-out-alt me-2"></i>Đăng xuất</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bg-warning text-dark py-1 px-2 overflow-hidden">
+            <marquee behavior="scroll" direction="left" class="small fw-bold">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Lưu ý: Luôn kiểm tra phiếu công tác trước khi thực hiện nhiệm vụ - An toàn là trên hết!
+            </marquee>
+        </div>
+
+        <div class="menu-grid">
+            <div class="menu-item news" onclick="showModule('news')">
+                <i class="fas fa-newspaper"></i>
+                <div class="menu-title">Tin tức & Sự kiện</div>
+            </div>
+            <div class="menu-item law" onclick="showModule('legal')">
+                <i class="fas fa-gavel"></i>
+                <div class="menu-title">Văn bản Pháp luật</div>
+            </div>
+            <div class="menu-item case" onclick="showModule('case')">
+                <i class="fas fa-radiation"></i> <div class="menu-title">Tình huống / Sự cố</div>
+            </div>
+            <div class="menu-item science" onclick="showModule('science')">
+                <i class="fas fa-flask"></i>
+                <div class="menu-title">Bài báo KH</div>
+            </div>
+            <div class="menu-item qa" onclick="showModule('qa')">
+                <i class="fas fa-question-circle"></i>
+                <div class="menu-title">Hỏi đáp & Tra cứu</div>
+            </div>
+            <div class="menu-item guide" onclick="showModule('guide')">
+                <i class="fas fa-book-reader"></i>
+                <div class="menu-title">HDSD & Tác giả</div>
+            </div>
+        </div>
+
+        <div class="container pb-5">
+            <h6 class="text-muted border-bottom pb-2 ms-2 me-2">Tài liệu mới nhất</h6>
+            <div class="list-group list-group-flush ms-2 me-2" id="recent-docs">
+                <div class="text-center py-3"><div class="loader"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // --- 1. FIREBASE CONFIGURATION ---
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCzWjfcD5Dgq7V-i2izb9tKLR6QM6qWPQo", 
+            authDomain: "tavietnam-78ae8.firebaseapp.com", 
+            projectId: "tavietnam-78ae8", 
+            storageBucket: "tavietnam-78ae8.firebasestorage.app", 
+            messagingSenderId: "670121705534", 
+            appId: "1:670121705534:web:1027ad98550573ad37116f" 
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // --- 2. STATE MANAGEMENT ---
+        const state = {
+            currentUser: null,
+            userProfile: null
+        };
+
+        // --- 3. DOM ELEMENTS ---
+        const screens = {
+            login: document.getElementById('screen-login'),
+            profile: document.getElementById('screen-profile'),
+            dashboard: document.getElementById('screen-dashboard')
+        };
+        
+        const loginForm = document.getElementById('login-form');
+        const profileForm = document.getElementById('profile-form');
+        const btnLogout = document.getElementById('btn-logout');
+        const userDisplayName = document.getElementById('user-display-name');
+
+        // --- 4. NAVIGATION FUNCTIONS ---
+        function showScreen(screenName) {
+            Object.values(screens).forEach(el => el.classList.remove('active'));
+            if(screens[screenName]) screens[screenName].classList.add('active');
+        }
+
+        // --- 5. AUTHENTICATION LOGIC ---
+        
+        // Lắng nghe trạng thái đăng nhập
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                console.log("User logged in:", user.email);
+                state.currentUser = user;
+                await checkUserProfile(user.uid);
+            } else {
+                console.log("User logged out");
+                state.currentUser = null;
+                state.userProfile = null;
+                showScreen('login');
+            }
+        });
+
+        // Xử lý Đăng nhập
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorDiv = document.getElementById('login-error');
+
+            errorDiv.classList.add('d-none');
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .catch((error) => {
+                    console.error("Login Error:", error);
+                    errorDiv.textContent = "Đăng nhập thất bại: " + error.message;
+                    errorDiv.classList.remove('d-none');
+                });
+        });
+
+        // Xử lý Đăng xuất
+        btnLogout.addEventListener('click', () => {
+            auth.signOut();
+        });
+
+        // --- 6. USER PROFILE LOGIC ---
+
+        // Kiểm tra xem user đã khai báo thông tin trong Firestore chưa
+        async function checkUserProfile(uid) {
+            try {
+                const docRef = db.collection('users').doc(uid);
+                const doc = await docRef.get();
+
+                if (doc.exists) {
+                    // Đã có thông tin -> Vào Dashboard
+                    state.userProfile = doc.data();
+                    console.log("User Profile Loaded:", state.userProfile);
+                    userDisplayName.textContent = state.userProfile.fullName || "Học viên";
+                    loadDashboardData();
+                    showScreen('dashboard');
+                } else {
+                    // Chưa có thông tin -> Vào trang cập nhật
+                    console.log("No profile found, redirecting to update...");
+                    showScreen('profile');
+                }
+            } catch (error) {
+                console.error("Error fetching profile:", error);
+                alert("Lỗi kết nối dữ liệu. Vui lòng thử lại.");
+            }
+        }
+
+        // Xử lý lưu thông tin user mới
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!state.currentUser) return;
+
+            const profileData = {
+                email: state.currentUser.email,
+                fullName: document.getElementById('pf-fullname').value,
+                phone: document.getElementById('pf-phone').value,
+                workplace: document.getElementById('pf-workplace').value,
+                position: document.getElementById('pf-position').value,
+                role: 'student',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                await db.collection('users').doc(state.currentUser.uid).set(profileData);
+                alert("Cập nhật thông tin thành công!");
+                state.userProfile = profileData;
+                userDisplayName.textContent = profileData.fullName;
+                showScreen('dashboard');
+            } catch (error) {
+                console.error("Error saving profile:", error);
+                alert("Lỗi khi lưu thông tin: " + error.message);
+            }
+        });
+
+        // --- 7. DASHBOARD LOGIC (Placeholder) ---
+        function loadDashboardData() {
+            const listContainer = document.getElementById('recent-docs');
+            // Dữ liệu giả lập để demo giao diện khi chưa có DB tài liệu
+            const mockDocs = [
+                { title: "QCVN 01:2020/BCT về An toàn điện", type: "Pháp luật", icon: "fa-gavel", color: "text-success" },
+                { title: "Hướng dẫn sơ cứu người bị điện giật", type: "Kỹ năng", icon: "fa-first-aid", color: "text-danger" },
+                { title: "Bài học rút ra từ sự cố trạm biến áp X", type: "Case Study", icon: "fa-exclamation-triangle", color: "text-warning" }
+            ];
+
+            let html = '';
+            mockDocs.forEach(doc => {
+                html += `
+                    <div class="list-group-item list-group-item-action d-flex align-items-center p-3">
+                        <i class="fas ${doc.icon} ${doc.color} fa-lg me-3"></i>
+                        <div>
+                            <div class="fw-bold text-dark">${doc.title}</div>
+                            <small class="text-muted">${doc.type}</small>
+                        </div>
+                        <i class="fas fa-chevron-right ms-auto text-muted"></i>
+                    </div>
+                `;
+            });
+            listContainer.innerHTML = html;
+        }
+
+        function showModule(moduleName) {
+            alert("Tính năng " + moduleName + " đang được phát triển trong phiên bản kế tiếp!");
+        }
+
+        // --- 8. SECURITY SCRIPTS ---
+        // Chặn phím tắt F12, Ctrl+U, Ctrl+S, Ctrl+P
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.key === 'u') || 
+                (e.ctrlKey && e.key === 's') || 
+                (e.ctrlKey && e.key === 'p')
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+    </script>
+</body>
+</html>
