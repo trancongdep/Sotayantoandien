@@ -20,137 +20,47 @@
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--bg-light);
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+            -webkit-user-select: none; user-select: none;
             overflow-x: hidden;
         }
 
-        /* --- Utility & Auth Styles (Giữ nguyên từ v1.1) --- */
+        /* Utility */
         .text-evn { color: var(--evn-blue); }
         .bg-evn { background-color: var(--evn-blue) !important; color: white; }
         .btn-evn { background-color: var(--evn-blue); color: white; border: none; }
         .btn-evn:hover { background-color: var(--evn-blue-dark); color: white; }
         .btn-warning { background-color: var(--evn-yellow); color: #fff; border: none; }
+        .btn-google { background: #fff; color: #757575; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+        /* Auth Screens */
+        .auth-container { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--evn-blue) 0%, #002d5a 100%); padding: 20px; }
+        .auth-card { background: white; border-radius: 15px; padding: 30px; width: 100%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .auth-logo { width: 80px; height: 80px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: -70px auto 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 3px solid var(--evn-yellow); }
+
+        /* Dashboard */
+        .app-header { background: var(--evn-blue); color: white; padding: 10px 15px; position: sticky; top: 0; z-index: 1030; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
         
-        .btn-google {
-            background-color: #fff;
-            color: #757575;
-            border: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .auth-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--evn-blue) 0%, #002d5a 100%);
-            padding: 20px;
-        }
-        .auth-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        .auth-logo {
-            width: 80px;
-            height: 80px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: -70px auto 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 3px solid var(--evn-yellow);
-        }
-
-        /* --- New Dashboard Styles --- */
-        .app-header {
-            background-color: var(--evn-blue);
-            color: white;
-            padding: 10px 15px;
-            position: sticky;
-            top: 0;
-            z-index: 1030; /* Cao hơn sidebar overlay */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* Sidebar Customization */
+        /* Sidebar */
         .offcanvas { max-width: 280px; }
-        .offcanvas-header { background-color: var(--evn-blue); color: white; }
-        .sidebar-user-info { background-color: var(--evn-blue-dark); padding: 15px; text-align: center; color: white; }
-        
-        .sidebar-menu-item {
-            padding: 15px 20px;
-            border-bottom: 1px solid #eee;
-            color: #333;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-        }
-        .sidebar-menu-item:hover { background-color: #f8f9fa; color: var(--evn-blue); padding-left: 25px; }
-        .sidebar-menu-item.active { background-color: #e8f0fe; color: var(--evn-blue); font-weight: 500; border-left: 5px solid var(--evn-blue); }
-        .sidebar-menu-item i { width: 30px; font-size: 1.2rem; }
+        .offcanvas-header { background: var(--evn-blue); color: white; }
+        .sidebar-user-info { background: var(--evn-blue-dark); padding: 15px; text-align: center; color: white; }
+        .sidebar-menu-item { padding: 15px 20px; border-bottom: 1px solid #eee; color: #333; cursor: pointer; display: flex; align-items: center; }
+        .sidebar-menu-item:hover { background: #f8f9fa; color: var(--evn-blue); padding-left: 25px; transition: 0.2s; }
+        .sidebar-menu-item.active { background: #e8f0fe; color: var(--evn-blue); font-weight: 500; border-left: 5px solid var(--evn-blue); }
+        .sidebar-menu-item.admin-link { color: var(--evn-red); font-weight: bold; background: #fff5f5; }
 
-        /* News Cards */
-        .news-card {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-            overflow: hidden;
-            background: white;
-        }
-        .news-img {
-            height: 160px;
-            background-color: #ddd;
-            background-position: center;
-            background-size: cover;
-            position: relative;
-        }
-        .news-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--evn-red);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
+        /* News Card */
+        .news-card { border: none; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 15px; overflow: hidden; background: white; }
+        .news-img { height: 160px; background-color: #ddd; background-position: center; background-size: cover; position: relative; }
+        .news-badge { position: absolute; top: 10px; left: 10px; background: var(--evn-red); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
         .news-body { padding: 15px; }
-        .news-title { font-weight: bold; font-size: 1rem; margin-bottom: 5px; color: #333; }
-        .news-meta { font-size: 0.8rem; color: #888; }
-
-        .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--evn-yellow);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
+        
+        /* Loading */
+        .loader { border: 5px solid #f3f3f3; border-top: 5px solid var(--evn-yellow); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .screen { display: none; }
-        .screen.active { display: block; }
-        .content-module { display: none; }
-        .content-module.active { display: block; animation: fadeIn 0.3s; }
+        .screen, .content-module { display: none; }
+        .screen.active, .content-module.active { display: block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     </style>
@@ -160,32 +70,16 @@
     <div id="screen-login" class="screen active">
         <div class="auth-container">
             <div class="auth-card text-center">
-                <div class="auth-logo">
-                    <i class="fas fa-bolt fa-2x text-warning"></i>
-                </div>
+                <div class="auth-logo"><i class="fas fa-bolt fa-2x text-warning"></i></div>
                 <h4 class="text-evn fw-bold mb-4">SỔ TAY AN TOÀN ĐIỆN</h4>
-                <p class="text-muted small mb-4">Đăng nhập để truy cập hệ thống.</p>
-                
                 <button onclick="loginWithGoogle()" class="btn btn-google w-100 py-2 mb-3 shadow-sm fw-bold">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" alt="Google">
-                    Đăng nhập bằng Gmail
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"> Đăng nhập bằng Gmail
                 </button>
-
-                <div class="d-flex align-items-center mb-3">
-                    <div class="flex-grow-1 border-bottom"></div>
-                    <span class="px-2 text-muted small">hoặc Email</span>
-                    <div class="flex-grow-1 border-bottom"></div>
-                </div>
-
+                <div class="d-flex align-items-center mb-3"><div class="flex-grow-1 border-bottom"></div><span class="px-2 text-muted small">hoặc Email</span><div class="flex-grow-1 border-bottom"></div></div>
                 <form id="login-form">
-                    <div class="mb-3 text-start">
-                        <input type="email" id="login-email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="mb-3 text-start">
-                        <input type="password" id="login-password" class="form-control" placeholder="Mật khẩu">
-                    </div>
-                    <div id="login-error" class="text-danger small mb-3 d-none"></div>
-                    <button type="submit" class="btn btn-evn w-100 py-2 fw-bold shadow-sm">ĐĂNG NHẬP</button>
+                    <input type="email" id="login-email" class="form-control mb-3" placeholder="Email">
+                    <input type="password" id="login-password" class="form-control mb-3" placeholder="Mật khẩu">
+                    <button type="submit" class="btn btn-evn w-100 py-2 fw-bold">ĐĂNG NHẬP</button>
                 </form>
             </div>
         </div>
@@ -196,80 +90,45 @@
             <div class="auth-card">
                 <h5 class="text-evn fw-bold text-center mb-3">THÔNG TIN HỌC VIÊN</h5>
                 <p class="text-muted small text-center mb-4">Xin chào <span id="welcome-name" class="fw-bold"></span>! Vui lòng hoàn tất hồ sơ.</p>
-                
                 <form id="profile-form">
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Họ tên</label>
-                        <input type="text" id="pf-fullname" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Email</label>
-                        <input type="email" id="pf-email" class="form-control" readonly disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Số điện thoại <span class="text-danger">*</span></label>
-                        <input type="tel" id="pf-phone" class="form-control" pattern="[0-9]{10,11}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Đơn vị công tác <span class="text-danger">*</span></label>
-                        <input type="text" id="pf-workplace" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold">Chức vụ <span class="text-danger">*</span></label>
-                        <input type="text" id="pf-position" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-warning w-100 fw-bold text-dark mt-2">LƯU & TRUY CẬP</button>
+                    <input type="text" id="pf-fullname" class="form-control mb-3" placeholder="Họ tên" required>
+                    <input type="email" id="pf-email" class="form-control mb-3" readonly disabled>
+                    <input type="tel" id="pf-phone" class="form-control mb-3" placeholder="Số điện thoại" required>
+                    <input type="text" id="pf-workplace" class="form-control mb-3" placeholder="Đơn vị công tác" required>
+                    <input type="text" id="pf-position" class="form-control mb-3" placeholder="Chức vụ" required>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold">LƯU & TRUY CẬP</button>
                 </form>
             </div>
         </div>
     </div>
 
     <div id="screen-dashboard" class="screen">
-        
         <div class="app-header">
-            <button class="btn btn-link text-white p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
-                <i class="fas fa-bars fa-lg"></i>
-            </button>
+            <button class="btn btn-link text-white p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars fa-lg"></i></button>
             <div class="fw-bold"><i class="fas fa-shield-alt text-warning me-2"></i>ESA MOBILE</div>
-            <div class="dropdown">
-                <img id="header-avatar" src="" class="rounded-circle" width="32" height="32" style="border: 2px solid white; display: none;">
-                <i id="header-icon-default" class="fas fa-user-circle fa-lg"></i>
-            </div>
+            <img id="header-avatar" src="" class="rounded-circle" width="32" height="32" style="border: 2px solid white; display: none;">
         </div>
 
         <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu">
-            <div class="offcanvas-header d-flex justify-content-between align-items-center">
-                <h6 class="offcanvas-title fw-bold"><i class="fas fa-bolt text-warning me-2"></i>MENU CHÍNH</h6>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
-            </div>
+            <div class="offcanvas-header"><h6 class="offcanvas-title fw-bold">MENU CHÍNH</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button></div>
             <div class="sidebar-user-info">
                 <img id="sidebar-avatar" src="" class="rounded-circle mb-2 bg-white p-1" width="60" height="60">
-                <div class="fw-bold" id="sidebar-name">Đang tải...</div>
+                <div class="fw-bold" id="sidebar-name">...</div>
                 <div class="small opacity-75" id="sidebar-unit">...</div>
             </div>
             <div class="offcanvas-body p-0">
                 <div class="list-group list-group-flush">
-                    <div class="sidebar-menu-item active" onclick="switchModule('news', this)">
-                        <i class="fas fa-newspaper text-primary"></i> Tin tức nổi bật
+                    <div class="sidebar-menu-item active" onclick="switchModule('news', this)"><i class="fas fa-newspaper text-primary me-3"></i> Tin tức nổi bật</div>
+                    <div class="sidebar-menu-item" onclick="switchModule('legal', this)"><i class="fas fa-gavel text-success me-3"></i> Văn bản pháp luật</div>
+                    <div class="sidebar-menu-item" onclick="switchModule('case', this)"><i class="fas fa-radiation text-danger me-3"></i> Tình huống sự cố</div>
+                    <div class="sidebar-menu-item" onclick="switchModule('science', this)"><i class="fas fa-flask text-info me-3"></i> Bài báo khoa học</div>
+                    <div class="sidebar-menu-item" onclick="switchModule('qa', this)"><i class="fas fa-question-circle text-warning me-3"></i> Hỏi đáp</div>
+                    
+                    <div id="admin-menu-link" class="sidebar-menu-item admin-link d-none" onclick="switchModule('admin', this)">
+                        <i class="fas fa-tools text-danger me-3"></i> Quản trị hệ thống
                     </div>
-                    <div class="sidebar-menu-item" onclick="switchModule('legal', this)">
-                        <i class="fas fa-gavel text-success"></i> Văn bản pháp luật
-                    </div>
-                    <div class="sidebar-menu-item" onclick="switchModule('case', this)">
-                        <i class="fas fa-radiation text-danger"></i> Tình huống / Sự cố
-                    </div>
-                    <div class="sidebar-menu-item" onclick="switchModule('science', this)">
-                        <i class="fas fa-flask text-info"></i> Bài báo khoa học
-                    </div>
-                    <div class="sidebar-menu-item" onclick="switchModule('qa', this)">
-                        <i class="fas fa-question-circle text-warning"></i> Hỏi đáp
-                    </div>
-                    <div class="sidebar-menu-item" onclick="switchModule('guide', this)">
-                        <i class="fas fa-book-reader text-secondary"></i> Tác giả & HDSD
-                    </div>
-                    <div class="sidebar-menu-item mt-3 border-top" onclick="handleLogout()">
-                        <i class="fas fa-sign-out-alt text-danger"></i> Đăng xuất
-                    </div>
+
+                    <div class="sidebar-menu-item mt-3 border-top" onclick="handleLogout()"><i class="fas fa-sign-out-alt text-danger me-3"></i> Đăng xuất</div>
                 </div>
             </div>
         </div>
@@ -278,33 +137,57 @@
             
             <div id="module-news" class="content-module active">
                 <h6 class="text-uppercase fw-bold text-muted mb-3 border-start border-4 border-warning ps-2">Tin mới nhất</h6>
+                <div id="news-feed"><div class="text-center"><div class="loader"></div></div></div>
+            </div>
+
+            <div id="module-admin" class="content-module">
+                <h5 class="fw-bold text-danger mb-3"><i class="fas fa-user-shield me-2"></i>Khu vực Quản trị</h5>
                 
-                <div id="news-feed">
-                    <div class="text-center"><div class="loader"></div></div>
+                <ul class="nav nav-tabs mb-3" id="adminTabs">
+                    <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-post-news">Đăng Tin Tức</button></li>
+                    <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-post-doc">Đăng Tài Liệu</button></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-post-news">
+                        <div class="card p-3 shadow-sm border-0">
+                            <form id="admin-news-form">
+                                <div class="mb-3"><label class="small fw-bold">Tiêu đề tin</label><input type="text" id="adm-news-title" class="form-control" required></div>
+                                <div class="mb-3"><label class="small fw-bold">Link Ảnh (URL)</label><input type="url" id="adm-news-img" class="form-control" placeholder="https://..."></div>
+                                <div class="mb-3"><label class="small fw-bold">Tóm tắt nội dung</label><textarea id="adm-news-summary" class="form-control" rows="3" required></textarea></div>
+                                <button type="submit" class="btn btn-evn w-100">Đăng Tin</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="tab-post-doc">
+                        <div class="card p-3 shadow-sm border-0">
+                            <div class="alert alert-warning small"><i class="fas fa-info-circle"></i> Chỉ cần dán Link chia sẻ Google Drive, hệ thống sẽ tự lấy ID.</div>
+                            <form id="admin-doc-form">
+                                <div class="mb-3"><label class="small fw-bold">Tên tài liệu / Văn bản</label><input type="text" id="adm-doc-title" class="form-control" required></div>
+                                <div class="mb-3">
+                                    <label class="small fw-bold">Danh mục</label>
+                                    <select id="adm-doc-cat" class="form-select">
+                                        <option value="legal">Văn bản pháp luật</option>
+                                        <option value="case">Tình huống / Sự cố</option>
+                                        <option value="science">Bài báo khoa học</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small fw-bold">Link Google Drive (Public)</label>
+                                    <input type="text" id="adm-doc-link" class="form-control" placeholder="https://drive.google.com/file/d/..." required>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">Lưu vào Hệ thống</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div id="module-legal" class="content-module">
-                <h6 class="text-uppercase fw-bold text-muted mb-3 border-start border-4 border-success ps-2">Văn bản pháp luật</h6>
-                <div class="alert alert-info small">Chức năng đang cập nhật dữ liệu từ Google Drive...</div>
-            </div>
-
-            <div id="module-case" class="content-module">
-                <h6 class="text-uppercase fw-bold text-muted mb-3 border-start border-4 border-danger ps-2">Tình huống sự cố</h6>
-                <p>Nội dung đang cập nhật...</p>
-            </div>
-             <div id="module-science" class="content-module">
-                <h6 class="text-uppercase fw-bold text-muted mb-3 ps-2">Bài báo khoa học</h6>
-                <p>Nội dung đang cập nhật...</p>
-            </div>
-             <div id="module-qa" class="content-module">
-                <h6 class="text-uppercase fw-bold text-muted mb-3 ps-2">Hỏi đáp</h6>
-                <p>Nội dung đang cập nhật...</p>
-            </div>
-             <div id="module-guide" class="content-module">
-                <h6 class="text-uppercase fw-bold text-muted mb-3 ps-2">Tác giả</h6>
-                <p>Nội dung đang cập nhật...</p>
-            </div>
+            <div id="module-legal" class="content-module"><div class="alert alert-info">Chưa có dữ liệu. Vui lòng vào Admin đăng bài.</div></div>
+            <div id="module-case" class="content-module"><div class="alert alert-info">Chưa có dữ liệu.</div></div>
+            <div id="module-science" class="content-module"><div class="alert alert-info">Chưa có dữ liệu.</div></div>
+            <div id="module-qa" class="content-module"><div class="alert alert-info">Đang phát triển.</div></div>
 
         </div>
     </div>
@@ -315,163 +198,69 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // --- 1. CONFIG ---
-        const firebaseConfig = { 
-            apiKey: "AIzaSyCzWjfcD5Dgq7V-i2izb9tKLR6QM6qWPQo", 
-            authDomain: "tavietnam-78ae8.firebaseapp.com", 
-            projectId: "tavietnam-78ae8", 
-            storageBucket: "tavietnam-78ae8.firebasestorage.app", 
-            messagingSenderId: "670121705534", 
-            appId: "1:670121705534:web:1027ad98550573ad37116f" 
-        };
-
+        const firebaseConfig = { apiKey: "AIzaSyCzWjfcD5Dgq7V-i2izb9tKLR6QM6qWPQo", authDomain: "tavietnam-78ae8.firebaseapp.com", projectId: "tavietnam-78ae8", storageBucket: "tavietnam-78ae8.firebasestorage.app", messagingSenderId: "670121705534", appId: "1:670121705534:web:1027ad98550573ad37116f" };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // --- 2. LOGIC ---
         const state = { currentUser: null, userProfile: null };
-        const screens = {
-            login: document.getElementById('screen-login'),
-            profile: document.getElementById('screen-profile'),
-            dashboard: document.getElementById('screen-dashboard')
-        };
-        
-        // Element Shortcuts
-        const sidebarBs = new bootstrap.Offcanvas(document.getElementById('sidebarMenu')); // Dùng để đóng mở sidebar bằng code
-        
-        // --- Navigation Helpers ---
-        function showScreen(screenName) {
-            Object.values(screens).forEach(el => el.classList.remove('active'));
-            if(screens[screenName]) screens[screenName].classList.add('active');
-        }
+        const sidebarBs = new bootstrap.Offcanvas(document.getElementById('sidebarMenu'));
 
-        function switchModule(moduleName, element) {
-            // 1. Đóng sidebar
+        // --- Navigation ---
+        function showScreen(name) {
+            document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+            document.getElementById('screen-' + name).classList.add('active');
+        }
+        function switchModule(name, el) {
             sidebarBs.hide();
+            document.querySelectorAll('.sidebar-menu-item').forEach(e => e.classList.remove('active'));
+            if(el) el.classList.add('active');
+            document.querySelectorAll('.content-module').forEach(e => e.classList.remove('active'));
+            document.getElementById('module-' + name).classList.add('active');
             
-            // 2. Active menu item visual
-            document.querySelectorAll('.sidebar-menu-item').forEach(el => el.classList.remove('active'));
-            if(element) element.classList.add('active');
-
-            // 3. Show content module
-            document.querySelectorAll('.content-module').forEach(el => el.classList.remove('active'));
-            const targetModule = document.getElementById('module-' + moduleName);
-            if(targetModule) targetModule.classList.add('active');
+            // Reload data if needed
+            if(name === 'news') loadNews();
+            // if(name === 'legal') loadDocs('legal');
         }
 
-        function handleLogout() {
-            auth.signOut();
-            sidebarBs.hide();
-        }
-
-        // --- Render Data ---
-        function renderNewsFeed() {
-            const container = document.getElementById('news-feed');
-            // Dữ liệu giả lập (Sau này lấy từ Firestore 'news' collection)
-            const newsData = [
-                {
-                    title: "EVN tăng cường đảm bảo điện mùa khô 2024",
-                    summary: "Tập đoàn Điện lực Việt Nam triển khai nhiều giải pháp đồng bộ để đảm bảo cung ứng điện...",
-                    img: "https://via.placeholder.com/400x200/0054A6/ffffff?text=EVN+News", // Ảnh giả
-                    tag: "Tin nóng",
-                    date: "14/01/2026"
-                },
-                {
-                    title: "Cảnh báo an toàn điện khi trời mưa bão",
-                    summary: "Người dân cần tuân thủ khoảng cách an toàn hành lang lưới điện...",
-                    img: "https://via.placeholder.com/400x200/F39C12/ffffff?text=Canh+Bao",
-                    tag: "An toàn",
-                    date: "12/01/2026"
-                },
-                {
-                    title: "Hội thảo Khoa học An toàn vệ sinh lao động",
-                    summary: "Giảng viên Trần Công Đẹp chia sẻ kinh nghiệm thực tế tại hội thảo...",
-                    img: "https://via.placeholder.com/400x200/D32F2F/ffffff?text=Hoi+Thao",
-                    tag: "Sự kiện",
-                    date: "10/01/2026"
-                }
-            ];
-
-            let html = '';
-            newsData.forEach(item => {
-                html += `
-                <div class="news-card">
-                    <div class="news-img" style="background-image: url('${item.img}');">
-                        <span class="news-badge">${item.tag}</span>
-                    </div>
-                    <div class="news-body">
-                        <div class="news-title">${item.title}</div>
-                        <p class="small text-muted mb-2 text-truncate">${item.summary}</p>
-                        <div class="news-meta"><i class="far fa-clock me-1"></i> ${item.date}</div>
-                    </div>
-                </div>
-                `;
-            });
-            container.innerHTML = html;
-        }
-
-        // --- AUTH LOGIC (Updated UI) ---
+        // --- Auth & Profile ---
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 state.currentUser = user;
                 await checkUserProfile(user);
             } else {
-                state.currentUser = null;
                 showScreen('login');
             }
         });
 
         async function checkUserProfile(user) {
-            try {
-                const docRef = db.collection('users').doc(user.uid);
-                const doc = await docRef.get();
-
-                if (doc.exists) {
-                    state.userProfile = doc.data();
-                    updateUI(state.userProfile, user);
-                    showScreen('dashboard');
-                    renderNewsFeed(); // Load tin tức ngay khi vào
-                } else {
-                    document.getElementById('pf-fullname').value = user.displayName || "";
-                    document.getElementById('pf-email').value = user.email || "";
-                    document.getElementById('welcome-name').textContent = user.displayName || "bạn";
-                    showScreen('profile');
+            const doc = await db.collection('users').doc(user.uid).get();
+            if (doc.exists) {
+                state.userProfile = doc.data();
+                updateUI(state.userProfile, user);
+                showScreen('dashboard');
+                loadNews();
+                
+                // Check ADMIN Role
+                if (state.userProfile.role === 'admin') {
+                    document.getElementById('admin-menu-link').classList.remove('d-none');
                 }
-            } catch (error) {
-                console.error(error);
-                alert("Lỗi tải dữ liệu user.");
+            } else {
+                document.getElementById('pf-fullname').value = user.displayName || "";
+                document.getElementById('pf-email').value = user.email || "";
+                document.getElementById('welcome-name').textContent = user.displayName || "bạn";
+                showScreen('profile');
             }
         }
 
-        // Update UI info in Sidebar & Header
         function updateUI(profile, userAuth) {
-            const avatarUrl = userAuth.photoURL || "https://via.placeholder.com/60?text=User";
-            
-            // Header
-            const headerAvatar = document.getElementById('header-avatar');
-            headerAvatar.src = avatarUrl;
-            headerAvatar.style.display = 'block';
-            document.getElementById('header-icon-default').style.display = 'none';
-
-            // Sidebar
+            const avatar = userAuth.photoURL || "https://via.placeholder.com/60";
+            document.getElementById('header-avatar').src = avatar;
+            document.getElementById('header-avatar').style.display = 'block';
             document.getElementById('sidebar-name').textContent = profile.fullName;
             document.getElementById('sidebar-unit').textContent = profile.workplace;
-            document.getElementById('sidebar-avatar').src = avatarUrl;
+            document.getElementById('sidebar-avatar').src = avatar;
         }
-
-        // Login Functions
-        function loginWithGoogle() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).catch(e => alert(e.message));
-        }
-
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            auth.signInWithEmailAndPassword(email, password).catch(e => alert(e.message));
-        });
 
         document.getElementById('profile-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -481,22 +270,90 @@
                 phone: document.getElementById('pf-phone').value,
                 workplace: document.getElementById('pf-workplace').value,
                 position: document.getElementById('pf-position').value,
-                role: 'student',
+                role: 'student', // Mặc định là student, muốn admin phải chỉnh trong Database
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             };
             await db.collection('users').doc(state.currentUser.uid).set(data);
             state.userProfile = data;
-            updateUI(data, state.currentUser);
             showScreen('dashboard');
-            renderNewsFeed();
+            loadNews();
         });
 
-        // Security
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'p'))) {
-                e.preventDefault();
-            }
+        function loginWithGoogle() { auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
+        document.getElementById('login-form').addEventListener('submit', (e) => { e.preventDefault(); auth.signInWithEmailAndPassword(document.getElementById('login-email').value, document.getElementById('login-password').value); });
+        function handleLogout() { auth.signOut(); sidebarBs.hide(); }
+
+        // --- ADMIN FUNCTIONS ---
+        
+        // Helper: Lấy ID từ link Google Drive
+        function getDriveId(url) {
+            const match = url.match(/[-\w]{25,}/);
+            return match ? match[0] : null;
+        }
+
+        // 1. Đăng Tin Tức
+        document.getElementById('admin-news-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const title = document.getElementById('adm-news-title').value;
+            const img = document.getElementById('adm-news-img').value || 'https://via.placeholder.com/400x200?text=EVN';
+            const summary = document.getElementById('adm-news-summary').value;
+
+            try {
+                await db.collection('news').add({
+                    title: title, img: img, summary: summary,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                alert("Đăng tin thành công!");
+                document.getElementById('admin-news-form').reset();
+            } catch (err) { alert("Lỗi: " + err.message); }
         });
+
+        // 2. Đăng Tài Liệu
+        document.getElementById('admin-doc-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const url = document.getElementById('adm-doc-link').value;
+            const fileId = getDriveId(url);
+            
+            if(!fileId) { alert("Link Google Drive không hợp lệ!"); return; }
+
+            try {
+                await db.collection('documents').add({
+                    title: document.getElementById('adm-doc-title').value,
+                    category: document.getElementById('adm-doc-cat').value,
+                    fileId: fileId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                alert("Lưu tài liệu thành công!");
+                document.getElementById('admin-doc-form').reset();
+            } catch (err) { alert("Lỗi: " + err.message); }
+        });
+
+        // --- PUBLIC FUNCTIONS ---
+        async function loadNews() {
+            const container = document.getElementById('news-feed');
+            try {
+                const snap = await db.collection('news').orderBy('timestamp', 'desc').limit(10).get();
+                if (snap.empty) { container.innerHTML = '<div class="text-center text-muted">Chưa có tin tức nào.</div>'; return; }
+                
+                let html = '';
+                snap.forEach(doc => {
+                    const d = doc.data();
+                    const date = d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleDateString('vi-VN') : '';
+                    html += `
+                    <div class="news-card">
+                        <div class="news-img" style="background-image: url('${d.img}');">
+                            <span class="news-badge">Mới</span>
+                        </div>
+                        <div class="news-body">
+                            <div class="news-title">${d.title}</div>
+                            <p class="small text-muted mb-2 text-truncate">${d.summary}</p>
+                            <div class="news-meta"><i class="far fa-clock me-1"></i> ${date}</div>
+                        </div>
+                    </div>`;
+                });
+                container.innerHTML = html;
+            } catch (err) { console.error(err); }
+        }
 
     </script>
 </body>
